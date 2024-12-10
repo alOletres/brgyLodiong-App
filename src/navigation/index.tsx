@@ -1,25 +1,26 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HeaderButton, Text } from '@react-navigation/elements';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { HeaderButton, Text } from "@react-navigation/elements";
 import {
   createStaticNavigation,
   StaticParamList,
-} from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Image } from 'react-native';
-import bell from '../assets/bell.png';
-import newspaper from '../assets/newspaper.png';
-import { Home } from './screens/Home';
-import { Profile } from './screens/Profile';
-import { Settings } from './screens/Settings';
-import { Updates } from './screens/Updates';
-import { NotFound } from './screens/NotFound';
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Image } from "react-native";
+import bell from "../assets/bell.png";
+import newspaper from "../assets/newspaper.png";
+import { Home } from "./screens/Home";
+import { Profile } from "./screens/Profile";
+import { Settings } from "./screens/Settings";
+import { Updates } from "./screens/Updates";
+import { NotFound } from "./screens/NotFound";
+import { LoginScreen } from "./screens/login/Login";
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
     Home: {
       screen: Home,
       options: {
-        title: 'Feed',
+        title: "Feed",
         tabBarIcon: ({ color, size }) => (
           <Image
             source={newspaper}
@@ -53,18 +54,22 @@ const HomeTabs = createBottomTabNavigator({
 const RootStack = createNativeStackNavigator({
   screens: {
     HomeTabs: {
-      screen: HomeTabs,
+      screen: LoginScreen,
       options: {
-        title: 'Home',
+        title: "Home",
         headerShown: false,
       },
     },
     Profile: {
       screen: Profile,
       linking: {
-        path: ':user(@[a-zA-Z0-9-_]+)',
+        path: ":user(@[a-zA-Z0-9-_]+)",
         parse: {
-          user: (value) => value.replace(/^@/, ''),
+          user: (value) => {
+            console.log("value", value);
+
+            value.replace(/^@/, "");
+          },
         },
         stringify: {
           user: (value) => `@${value}`,
@@ -74,7 +79,7 @@ const RootStack = createNativeStackNavigator({
     Settings: {
       screen: Settings,
       options: ({ navigation }) => ({
-        presentation: 'modal',
+        presentation: "modal",
         headerRight: () => (
           <HeaderButton onPress={navigation.goBack}>
             <Text>Close</Text>
@@ -85,10 +90,10 @@ const RootStack = createNativeStackNavigator({
     NotFound: {
       screen: NotFound,
       options: {
-        title: '404',
+        title: "404",
       },
       linking: {
-        path: '*',
+        path: "*",
       },
     },
   },

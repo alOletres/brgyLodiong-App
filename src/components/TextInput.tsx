@@ -26,6 +26,7 @@ const TextInput = ({
   rules = {},
   id,
   label,
+  placeholder,
   icon,
   onPress,
 }: CustomInputProps) => {
@@ -47,6 +48,7 @@ const TextInput = ({
             onChangeText={onChange}
             onBlur={onBlur}
             secureTextEntry={secureTextEntry}
+            placeholder={placeholder}
           />
           {error && (
             <Text style={{ color: "red", alignSelf: "stretch" }}>

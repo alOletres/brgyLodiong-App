@@ -6,24 +6,25 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Image } from "react-native";
-import bell from "../assets/bell.png";
-import newspaper from "../assets/newspaper.png";
-import { Home } from "./screens/Home";
-import { Profile } from "./screens/Profile";
-import { Settings } from "./screens/Settings";
-import { Updates } from "./screens/Updates";
+import NewspaperIcon from "../assets/newspaper.png";
+import RequestIcon from "../assets/request.png";
+import ProfileIcon from "../assets/profile.png";
+import ImageLogo from "../../assets/logo.png";
+
 import { NotFound } from "./screens/NotFound";
-import { LoginScreen } from "./screens/login/Login";
+import { LoginScreen } from "./screens/login";
+import { EventScreen } from "./screens/events";
+import { RequestScreen } from "./screens/request";
+import { ProfileScreen } from "./screens/profile";
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
-    Home: {
-      screen: Home,
+    Events: {
+      screen: EventScreen,
       options: {
-        title: "Feed",
         tabBarIcon: ({ color, size }) => (
           <Image
-            source={newspaper}
+            source={NewspaperIcon}
             tintColor={color}
             style={{
               width: size,
@@ -31,20 +32,40 @@ const HomeTabs = createBottomTabNavigator({
             }}
           />
         ),
+
+        headerLeft: () => (
+          <Image source={ImageLogo} style={{ height: 40, width: 40 }} />
+        ),
       },
     },
-    Updates: {
-      screen: Updates,
+    Request: {
+      screen: RequestScreen,
       options: {
         tabBarIcon: ({ color, size }) => (
           <Image
-            source={bell}
+            source={RequestIcon}
             tintColor={color}
-            style={{
-              width: size,
-              height: size,
-            }}
+            style={{ width: size, height: size }}
           />
+        ),
+        headerLeft: () => (
+          <Image source={ImageLogo} style={{ height: 40, width: 40 }} />
+        ),
+      },
+    },
+
+    Profile: {
+      screen: ProfileScreen,
+      options: {
+        tabBarIcon: ({ color, size }) => (
+          <Image
+            source={ProfileIcon}
+            tintColor={color}
+            style={{ height: size, width: size }}
+          />
+        ),
+        headerLeft: () => (
+          <Image source={ImageLogo} style={{ height: 40, width: 40 }} />
         ),
       },
     },
@@ -53,40 +74,47 @@ const HomeTabs = createBottomTabNavigator({
 
 const RootStack = createNativeStackNavigator({
   screens: {
-    HomeTabs: {
+    Login: {
       screen: LoginScreen,
+      options: {
+        title: "Login",
+        headerShown: false,
+      },
+    },
+    HomeTabs: {
+      screen: HomeTabs,
       options: {
         title: "Home",
         headerShown: false,
       },
     },
-    Profile: {
-      screen: Profile,
-      linking: {
-        path: ":user(@[a-zA-Z0-9-_]+)",
-        parse: {
-          user: (value) => {
-            console.log("value", value);
+    // Profile: {
+    //   screen: Profile,
+    //   linking: {
+    //     path: ":user(@[a-zA-Z0-9-_]+)",
+    //     parse: {
+    //       user: (value) => {
+    //         console.log("value", value);
 
-            value.replace(/^@/, "");
-          },
-        },
-        stringify: {
-          user: (value) => `@${value}`,
-        },
-      },
-    },
-    Settings: {
-      screen: Settings,
-      options: ({ navigation }) => ({
-        presentation: "modal",
-        headerRight: () => (
-          <HeaderButton onPress={navigation.goBack}>
-            <Text>Close</Text>
-          </HeaderButton>
-        ),
-      }),
-    },
+    //         value.replace(/^@/, "");
+    //       },
+    //     },
+    //     stringify: {
+    //       user: (value) => `@${value}`,
+    //     },
+    //   },
+    // },
+    // Settings: {
+    //   screen: Settings,
+    //   options: ({ navigation }) => ({
+    //     presentation: "modal",
+    //     headerRight: () => (
+    //       <HeaderButton onPress={navigation.goBack}>
+    //         <Text>Close</Text>
+    //       </HeaderButton>
+    //     ),
+    //   }),
+    // },
     NotFound: {
       screen: NotFound,
       options: {

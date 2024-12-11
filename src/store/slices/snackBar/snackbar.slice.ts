@@ -23,9 +23,13 @@ const snackBarSlice = createSlice({
         snackBarProps: action.payload,
       };
     },
+
+    clearSnackbarProps(state, action) {
+      return { ...state, snackBarProps: action.payload };
+    },
   },
 });
 
-export const { setSnackbarProps } = snackBarSlice.actions;
+export const { setSnackbarProps, clearSnackbarProps } = snackBarSlice.actions;
 
 export default snackBarSlice.reducer;

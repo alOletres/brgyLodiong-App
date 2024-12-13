@@ -4,21 +4,24 @@ import { useHooks } from "./hooks";
 import CardActions from "../../../components/CardActions";
 import CardTitle from "../../../components/CardTitle";
 import { StyleSheet, View } from "react-native";
+import DropDown from "../../../components/Dropdown";
 
 export function RequestScreen() {
-  const { control } = useHooks();
+  const { control, option, onSubmit, handleSubmit, handleFormReset } =
+    useHooks();
 
   return (
     <View style={styles.container}>
       <Card style={styles.spacing}>
         <CardTitle title="Request Documents" icon="account-arrow-right" />
         <View style={{ paddingHorizontal: 5 }}>
-          <TextInput
+          <DropDown
             control={control}
             name="type"
-            label="Select Request type"
-            dense={true}
+            label="Select Request"
             rules={{ required: "Request type is required" }}
+            options={option}
+            mode="outlined"
           />
 
           <TextInput
@@ -34,9 +37,11 @@ export function RequestScreen() {
           component={[
             {
               name: "Clear",
+              onPress: handleFormReset,
             },
             {
               name: "Submit",
+              onPress: onSubmit(handleSubmit),
             },
           ]}
         />
@@ -51,10 +56,11 @@ export function RequestScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
+    margin: 0,
   },
 
   spacing: {
     marginBottom: 30,
+    borderRadius: 0,
   },
 });

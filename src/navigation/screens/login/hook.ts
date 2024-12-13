@@ -1,18 +1,20 @@
-import { useForm } from "react-hook-form";
+import { Control, FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { LoginAsync } from "../../../store/slices/auth/auth.effect";
 import { authSelector } from "../../../store/slices/auth/auth.selector";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useSnackBar } from "../../../components/hooks/useSnackBar";
 import { useNavigation } from "@react-navigation/native";
+import { handleErrors, isError } from "../../../utils/catchError";
+import { setToken } from "../../../lib/tokenStorage";
 export interface ILoginCredentials {
   username: string;
   password: string;
 }
 export const useHooks = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { message, data, isError } = useSelector(authSelector);
+  const { message, data } = useSelector(authSelector);
   const { setSnackbarProps } = useSnackBar();
   const { navigate } = useNavigation();
 
@@ -20,32 +22,46 @@ export const useHooks = () => {
     control,
     handleSubmit: handleFormSubmit,
     reset,
-    getValues,
   } = useForm({
     defaultValues: {},
   });
 
-  const handleSubmit = () => {
-    const { ...element } = getValues() as ILoginCredentials;
+  const handleSubmit = async ({ ...data }) => {
+    try {
+      const response = await dispatch(
+        LoginAsync({
+          ...data,
+        } as ILoginCredentials)
+      );
 
-    dispatch(LoginAsync({ ...element }));
+      if (isError(response)) throw new Error(response.message);
+
+      navigate("HomeTabs");
+      setSnackbarProps({
+        children: "User successfully login!",
+        type: "success",
+      });
+      reset();
+    } catch (err) {
+      const error = err as any;
+      setSnackbarProps({
+        children:
+          error?.message ||
+          "Either Username and Password is incorrect, Try again!",
+        type: "error",
+      });
+    }
   };
 
   const handleForgotPassword = () => {};
 
   const handleSignUp = () => {};
 
-  useEffect(() => {
-    const type = isError ? "error" : "success";
-    setSnackbarProps({
-      children: message,
-      type,
-    });
-
-    if (type === "success" && message) {
-      navigate("HomeTabs");
+  useMemo(async () => {
+    if (data?.access_token) {
+      await setToken("accessToken", data.access_token);
     }
-  }, [message, data]);
+  }, [data]);
 
   return {
     control,

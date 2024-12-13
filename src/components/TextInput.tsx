@@ -12,7 +12,7 @@ import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
  * Input props properties
  * extend {@link TextInputProps} props
  */
-type CustomInputProps = TextInputProps &
+export type ICustomInputProps = TextInputProps &
   Pick<ControllerProps, "control" | "defaultValue" | "name" | "rules"> & {
     icon?: IconSource;
     onPress?: null | ((event: GestureResponderEvent) => void) | undefined;
@@ -29,7 +29,7 @@ const TextInput = ({
   placeholder,
   icon,
   onPress,
-}: CustomInputProps) => {
+}: ICustomInputProps) => {
   return (
     <Controller
       control={control}

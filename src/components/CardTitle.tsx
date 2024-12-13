@@ -11,6 +11,8 @@ export interface ICardTitleProps {
 const CardTitle = ({ icon, ...props }: ICardTitleProps) => {
   return (
     <Card.Title
+      titleVariant="titleMedium"
+      subtitleVariant="labelSmall"
       {...props}
       left={(props) => <Avatar.Icon {...props} icon={icon} />}
     />

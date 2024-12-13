@@ -7,14 +7,14 @@ export function EventScreen() {
   return (
     <ScrollView>
       <CustomCard
-        title="Title"
+        title="Event title"
         subtitle="Sub title"
         icon="calendar-star"
         content={content}
       />
 
       <CustomCard
-        title="Title"
+        title="Event title"
         subtitle="Sub title"
         icon="calendar-star"
         content={content}

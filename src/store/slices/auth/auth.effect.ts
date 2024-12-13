@@ -3,6 +3,7 @@ import { ILoginCredentials } from "../../../navigation/screens/login/hook";
 import axios from "../../../constants/baseUrl";
 import { AxiosError } from "axios";
 import { IAPIResponse } from "./auth.slice";
+import { handleErrors } from "../../../utils/catchError";
 
 export const LoginAsync = createAsyncThunk(
   "auth/login",
@@ -16,6 +17,7 @@ export const LoginAsync = createAsyncThunk(
       return response.data;
     } catch (err) {
       const error = err as AxiosError<IAPIResponse<undefined>>;
+      handleErrors(err);
 
       return rejectWithValue(error.response?.data.message);
     }

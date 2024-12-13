@@ -1,12 +1,9 @@
 import * as React from "react";
-import { Avatar, Card } from "react-native-paper";
+import { Card } from "react-native-paper";
 import CardTitle, { ICardTitleProps } from "./CardTitle";
 import { ICardContentProps } from "./CardContent";
 import CardContent from "./CardContent";
-
-const LeftContent = ({ ...props }) => (
-  <Avatar.Icon {...props} icon="calendar-star" />
-);
+import CardCover from "./CardCover";
 
 export interface ICustomCardProps extends ICardTitleProps {
   content: ICardContentProps[];
@@ -18,10 +15,10 @@ const CardComponent = ({
   coverImage = "https://picsum.photos/700",
   ...props
 }: ICustomCardProps) => (
-  <Card style={{ margin: 10 }}>
+  <Card style={{ marginBottom: 10, borderRadius: 0 }}>
     <CardTitle {...props} />
     <CardContent content={content} />
-    <Card.Cover source={{ uri: coverImage }} />
+    <CardCover imageSource={coverImage} />
   </Card>
 );
 

@@ -9,6 +9,7 @@ import { Image } from "react-native";
 import NewspaperIcon from "../assets/newspaper.png";
 import RequestIcon from "../assets/request.png";
 import ProfileIcon from "../assets/profile.png";
+import OfficialIcon from "../assets/official.png";
 import ImageLogo from "../../assets/logo.png";
 
 import { NotFound } from "./screens/NotFound";
@@ -16,6 +17,7 @@ import { LoginScreen } from "./screens/login";
 import { EventScreen } from "./screens/events";
 import { RequestScreen } from "./screens/request";
 import { ProfileScreen } from "./screens/profile";
+import { OfficialsScreen } from "./screens/officials";
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
@@ -50,6 +52,19 @@ const HomeTabs = createBottomTabNavigator({
         ),
         headerLeft: () => (
           <Image source={ImageLogo} style={{ height: 40, width: 40 }} />
+        ),
+      },
+    },
+
+    Officials: {
+      screen: OfficialsScreen,
+      options: {
+        tabBarIcon: ({ color, size }) => (
+          <Image
+            source={OfficialIcon}
+            tintColor={color}
+            style={{ width: size, height: size }}
+          />
         ),
       },
     },

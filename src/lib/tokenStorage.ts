@@ -29,4 +29,8 @@ export const deleteToken = async (key: ITokenKey) => {
   }
 };
 
-export const decodeToken = (token: string) => jwtDecode(token);
+export const decodeToken = async () => {
+  const token = await getToken("accessToken");
+
+  return jwtDecode(token as string);
+};

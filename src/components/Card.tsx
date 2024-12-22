@@ -18,7 +18,7 @@ const CardComponent = ({
   <Card style={{ marginBottom: 10, borderRadius: 0 }}>
     <CardTitle {...props} />
     <CardContent content={content} />
-    <CardCover imageSource={coverImage} />
+    {/* <CardCover imageSource={coverImage} /> */}
   </Card>
 );
 

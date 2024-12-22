@@ -17,7 +17,7 @@ export function RequestScreen() {
         <View style={{ paddingHorizontal: 5 }}>
           <DropDown
             control={control}
-            name="type"
+            name="requestType"
             label="Select Request"
             rules={{ required: "Request type is required" }}
             options={option}

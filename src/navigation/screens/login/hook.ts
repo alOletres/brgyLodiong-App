@@ -1,12 +1,12 @@
-import { Control, FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { LoginAsync } from "../../../store/slices/auth/auth.effect";
 import { authSelector } from "../../../store/slices/auth/auth.selector";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useSnackBar } from "../../../components/hooks/useSnackBar";
 import { useNavigation } from "@react-navigation/native";
-import { handleErrors, isError } from "../../../utils/catchError";
+import { isError } from "../../../utils/catchError";
 import { setToken } from "../../../lib/tokenStorage";
 export interface ILoginCredentials {
   username: string;
@@ -35,6 +35,10 @@ export const useHooks = () => {
       );
 
       if (isError(response)) throw new Error(response.message);
+
+      const { access_token } = response.payload as { access_token: string };
+
+      await setToken("accessToken", access_token);
 
       navigate("HomeTabs");
       setSnackbarProps({

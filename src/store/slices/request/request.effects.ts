@@ -20,3 +20,18 @@ export const createRequestAsync = createAsyncThunk(
     }
   }
 );
+
+export const fetchRequestByUserAsync = createAsyncThunk(
+  "request/find/:id",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`/api/request/find/${id}`);
+      return response.data;
+    } catch (err) {
+      const error = err as AxiosError<IAPIResponse<undefined>>;
+      handleErrors(err);
+
+      return rejectWithValue(error.response?.data.message);
+    }
+  }
+);

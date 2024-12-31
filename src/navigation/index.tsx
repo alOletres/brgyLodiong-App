@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HeaderButton, Text } from "@react-navigation/elements";
 import {
   createStaticNavigation,
   StaticParamList,
@@ -9,7 +8,6 @@ import { Image } from "react-native";
 import NewspaperIcon from "../assets/newspaper.png";
 import RequestIcon from "../assets/request.png";
 import ProfileIcon from "../assets/profile.png";
-import OfficialIcon from "../assets/official.png";
 import ImageLogo from "../../assets/logo.png";
 
 import { NotFound } from "./screens/NotFound";
@@ -17,7 +15,7 @@ import { LoginScreen } from "./screens/login";
 import { EventScreen } from "./screens/events";
 import { RequestScreen } from "./screens/request";
 import { ProfileScreen } from "./screens/profile";
-import { OfficialsScreen } from "./screens/officials";
+import { ComposeRequestScreen } from "./screens/request/subscreen/compose-request";
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
@@ -56,19 +54,6 @@ const HomeTabs = createBottomTabNavigator({
       },
     },
 
-    Officials: {
-      screen: OfficialsScreen,
-      options: {
-        tabBarIcon: ({ color, size }) => (
-          <Image
-            source={OfficialIcon}
-            tintColor={color}
-            style={{ width: size, height: size }}
-          />
-        ),
-      },
-    },
-
     Profile: {
       screen: ProfileScreen,
       options: {
@@ -103,6 +88,12 @@ const RootStack = createNativeStackNavigator({
         headerShown: false,
       },
     },
+    Compose: {
+      screen: ComposeRequestScreen,
+      options: {
+        title: "",
+      },
+    },
     // Profile: {
     //   screen: Profile,
     //   linking: {
@@ -122,6 +113,7 @@ const RootStack = createNativeStackNavigator({
     // Settings: {
     //   screen: Settings,
     //   options: ({ navigation }) => ({
+
     //     presentation: "modal",
     //     headerRight: () => (
     //       <HeaderButton onPress={navigation.goBack}>

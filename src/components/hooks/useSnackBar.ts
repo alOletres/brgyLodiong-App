@@ -9,7 +9,7 @@ import { snackBarSelector } from "../../store/slices/snackBar/snackbar.selector"
 export type APIResponse<T> = {
   [x: string]: any;
   data: T;
-  message: string;
+  message?: string;
   status?: number;
   statusText?: string;
 };

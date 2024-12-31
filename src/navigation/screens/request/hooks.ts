@@ -1,50 +1,26 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Option } from "react-native-paper-dropdown";
-import { useDispatch } from "react-redux";
+import { useEffect, useMemo } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { useSnackBar } from "../../../components/hooks/useSnackBar";
-import { createRequestAsync } from "../../../store/slices/request/request.effects";
+import { fetchRequestByUserAsync } from "../../../store/slices/request/request.effects";
 import { decodeToken } from "../../../lib/tokenStorage";
-import { CreateRequestDto } from "./type";
-import { isError } from "../../../utils/catchError";
+import { FindAllRequestsDto } from "./type";
 
-const requestTypes: string[] = ["CERTIFICATE", "CLEARANCE", "PERMIT"];
+import { selectRequest } from "../../../store/slices/request/request.selector";
+import { ICustomListSection } from "../../../components/ListSection";
+import moment from "moment";
 
 export const useHooks = () => {
-  const { control, handleSubmit: onSubmit, reset } = useForm();
   const dispatch = useDispatch<AppDispatch>();
   const { setSnackbarProps } = useSnackBar();
+  const { data } = useSelector(selectRequest);
 
-  const [option, setOption] = useState<Option[]>(
-    requestTypes.map((value): Option => {
-      return {
-        label: value,
-        value,
-      };
-    })
-  );
-
-  const handleSubmit = async ({ ...data }) => {
+  const fetchRequestByUser = async () => {
     try {
       const { id } = (await decodeToken()) as { id: number };
-      const payload = data as Pick<CreateRequestDto, "requestType" | "purpose">;
 
-      const response = await dispatch(
-        createRequestAsync({
-          ...payload,
-          residentId: id,
-        })
-      );
-
-      if (isError(response)) throw new Error(response.message);
-
-      handleFormReset();
-
-      setSnackbarProps({
-        children: "Request successfully created!",
-        type: "success",
-      });
+      await dispatch(fetchRequestByUserAsync(id)).unwrap(); // Use .unwrap() to handle errors cleanly
     } catch (err) {
       const error = err as any;
       setSnackbarProps({
@@ -54,9 +30,30 @@ export const useHooks = () => {
     }
   };
 
-  const handleFormReset = () => {
-    reset();
-  };
+  useEffect(() => {
+    fetchRequestByUser();
+  }, [dispatch]);
 
-  return { control, option, handleSubmit, onSubmit, handleFormReset };
+  const dataSource = useMemo((): ICustomListSection[] | undefined => {
+    return data?.map((value: FindAllRequestsDto): ICustomListSection => {
+      return {
+        content: [
+          {
+            title: value.requestType,
+            description: value.purpose,
+            date:
+              value.status === "COMPLETED"
+                ? moment(value.dateCompleted).format("YYYY/MM/DD")
+                : moment(value.dateRequested).format("YYYY/MM/DD"),
+            status: value.status,
+            icon: "",
+          },
+        ],
+      };
+    });
+  }, [data]);
+
+  return {
+    dataSource,
+  };
 };

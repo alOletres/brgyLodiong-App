@@ -4,6 +4,7 @@ import {
   List,
   ListAccordionProps,
   ButtonProps,
+  Text,
 } from "react-native-paper";
 import { IListContent } from "./ListSection";
 import { ICustomInputProps } from "./TextInput";
@@ -44,7 +45,7 @@ const ListAccordion = ({
         expanded={expanded}
         onPress={handlePress}
       >
-        {fields?.length &&
+        {fields?.length ? (
           fields.map((field, key) => {
             if (isListItem(field)) {
               const { title, icon } = field.fieldProps;
@@ -67,7 +68,10 @@ const ListAccordion = ({
                 />
               );
             }
-          })}
+          })
+        ) : (
+          <Text>No Content Found</Text>
+        )}
 
         {actions?.length && (
           <View

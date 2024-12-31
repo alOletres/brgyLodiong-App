@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { LoginAsync } from "./auth.effect";
 
 export interface IAPIResponse<T> {
-  message: string;
+  message?: string;
   data?: T;
   isFetching: boolean;
   isError: boolean;

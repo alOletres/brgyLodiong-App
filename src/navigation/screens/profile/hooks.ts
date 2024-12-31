@@ -2,11 +2,14 @@ import { useForm } from "react-hook-form";
 import { Field } from "../../../components/ListAccordion";
 import { ICustomInputProps } from "../../../components/TextInput";
 import { IListContent } from "../../../components/ListSection";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ButtonProps } from "react-native-paper";
+import { decodeToken } from "../../../lib/tokenStorage";
+import { FindAllResidentsDto } from "./type";
 
 export const useHooks = () => {
   const { control, handleSubmit: onSubmit, reset, watch } = useForm({});
+  const [listItems, setListItems] = useState<Field<IListContent>[]>([]);
 
   const [expandedAccount, setExpandedAccount] = useState<boolean>(true);
   const handleAccountPress = () => setExpandedAccount(!expandedAccount);
@@ -14,7 +17,7 @@ export const useHooks = () => {
   const [expandedSecurity, setExpandedSecurity] = useState<boolean>(false);
   const handleSecurityPress = () => setExpandedSecurity(!expandedSecurity);
 
-  const currentPassword = watch("currentPassword");
+  const newPassword = watch("newPassword");
 
   const fields: Field<ICustomInputProps>[] = [
     {
@@ -35,8 +38,11 @@ export const useHooks = () => {
         control,
         rules: {
           required: "Confirm password is required",
-          validate: (value) =>
-            value === currentPassword || "Password do not match",
+          validate: (value) => {
+            console.log("value", value, newPassword);
+
+            return value === newPassword || "Password do not match";
+          },
         },
         secureTextEntry: true,
       },
@@ -53,29 +59,43 @@ export const useHooks = () => {
     },
   ];
 
-  const listItems: Field<IListContent>[] = [
-    {
-      fieldType: "list",
-      fieldProps: { title: "John Doe", icon: "face-man" },
-    },
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { email, resident } = (await decodeToken()) as {
+        email: string;
+        resident: FindAllResidentsDto;
+      };
 
-    {
-      fieldType: "list",
-      fieldProps: { title: "johndoe@gmail.com", icon: "email" },
-    },
-    {
-      fieldType: "list",
-      fieldProps: { title: "0926 391 9845", icon: "phone" },
-    },
+      setListItems([
+        {
+          fieldType: "list",
+          fieldProps: {
+            title: `${resident.firstname} ${resident.lastname}`,
+            icon: "face-man",
+          },
+        },
 
-    {
-      fieldType: "list",
-      fieldProps: {
-        title: "Bahamas, United States of America",
-        icon: "google-maps",
-      },
-    },
-  ];
+        {
+          fieldType: "list",
+          fieldProps: { title: email, icon: "email" },
+        },
+        {
+          fieldType: "list",
+          fieldProps: { title: resident.contact, icon: "phone" },
+        },
+
+        {
+          fieldType: "list",
+          fieldProps: {
+            title: resident.address,
+            icon: "google-maps",
+          },
+        },
+      ]);
+    };
+
+    fetchUser();
+  }, []);
 
   const handleChangePassword = ({ ...data }) => {
     console.log("data", data);

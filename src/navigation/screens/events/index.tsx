@@ -6,19 +6,13 @@ export function EventScreen() {
   const { content } = useHooks();
   return (
     <ScrollView>
-      <CustomCard
-        title="Event title"
-        subtitle="Sub title"
-        icon="calendar-star"
-        content={content}
-      />
-
-      <CustomCard
-        title="Event title"
-        subtitle="Sub title"
-        icon="calendar-star"
-        content={content}
-      />
+      {content?.length ? (
+        content.map(({ content, ...props }, key) => {
+          return <CustomCard key={key} {...props} content={content} />;
+        })
+      ) : (
+        <Text>No Events Found</Text>
+      )}
     </ScrollView>
   );
 }

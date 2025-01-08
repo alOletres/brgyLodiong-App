@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "../lib/tokenStorage";
 
 const base = axios.create({
-  baseURL: "http://192.168.112.73:4000",
+  baseURL: "http://192.168.68.103:4000",
 });
 
 // Add a request interceptor

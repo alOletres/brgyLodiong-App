@@ -1,18 +1,32 @@
-import { Card, List, MD3Colors, Text } from "react-native-paper";
+import { Card, Icon, List, MD3Colors, Text } from "react-native-paper";
 import { useHooks } from "./hooks";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View, TouchableOpacity } from "react-native";
 import ListSection from "../../../components/ListSection";
 import AnimatedFab from "./../../../components/AnimatedFab";
 
 export function RequestScreen() {
-  const { dataSource } = useHooks();
+  const { dataSource, fetchRequestByUser } = useHooks();
 
   return (
     <>
       <ScrollView style={styles.container}>
         <Card style={styles.spacing}>
           <List.Section>
-            <List.Subheader style={styles.header}>Recent</List.Subheader>
+            <List.Subheader style={styles.header}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <Text variant="titleSmall">Recent</Text>
+                <TouchableOpacity onPress={fetchRequestByUser}>
+                  <Icon size={20} source="refresh" />
+                </TouchableOpacity>
+              </View>
+            </List.Subheader>
           </List.Section>
           {dataSource?.length ? (
             dataSource.map((props, key) => {

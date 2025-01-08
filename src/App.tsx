@@ -3,6 +3,8 @@ import { Asset } from "expo-asset";
 import * as SplashScreen from "expo-splash-screen";
 import * as React from "react";
 import { Navigation } from "./navigation";
+import { Pressable, StyleSheet, View } from "react-native";
+import * as Updates from "expo-updates";
 
 Asset.loadAsync([
   ...NavigationAssets,

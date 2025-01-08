@@ -16,6 +16,7 @@ import { EventScreen } from "./screens/events";
 import { RequestScreen } from "./screens/request";
 import { ProfileScreen } from "./screens/profile";
 import { ComposeRequestScreen } from "./screens/request/subscreen/compose-request";
+import { SignUpScreen } from "./screens/signup";
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
@@ -90,6 +91,12 @@ const RootStack = createNativeStackNavigator({
     },
     Compose: {
       screen: ComposeRequestScreen,
+      options: {
+        title: "",
+      },
+    },
+    SignUp: {
+      screen: SignUpScreen,
       options: {
         title: "",
       },

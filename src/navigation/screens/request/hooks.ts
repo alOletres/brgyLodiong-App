@@ -55,5 +55,6 @@ export const useHooks = () => {
 
   return {
     dataSource,
+    fetchRequestByUser,
   };
 };

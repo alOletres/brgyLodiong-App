@@ -4,12 +4,22 @@ import { ICustomInputProps } from "../../../components/TextInput";
 import { IListContent } from "../../../components/ListSection";
 import { useEffect, useMemo, useState } from "react";
 import { ButtonProps } from "react-native-paper";
-import { decodeToken } from "../../../lib/tokenStorage";
+import { decodeToken, deleteToken } from "../../../lib/tokenStorage";
 import { FindAllResidentsDto } from "./type";
+import { ChangePasswordDto } from "../login/type";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store";
+import { ChangePasswordAsync } from "../../../store/slices/auth/auth.effect";
+import { useSnackBar } from "../../../components/hooks/useSnackBar";
+import { useNavigation } from "@react-navigation/native";
+import { isError } from "../../../utils/catchError";
 
 export const useHooks = () => {
   const { control, handleSubmit: onSubmit, reset, watch } = useForm({});
   const [listItems, setListItems] = useState<Field<IListContent>[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { setSnackbarProps } = useSnackBar();
+  const { navigate } = useNavigation();
 
   const [expandedAccount, setExpandedAccount] = useState<boolean>(true);
   const handleAccountPress = () => setExpandedAccount(!expandedAccount);
@@ -33,15 +43,14 @@ export const useHooks = () => {
     {
       fieldType: "text",
       fieldProps: {
-        name: "confirmPassword",
-        label: "Confirm password",
+        name: "newPassword",
+        label: "New password",
         control,
         rules: {
-          required: "Confirm password is required",
-          validate: (value) => {
-            console.log("value", value, newPassword);
-
-            return value === newPassword || "Password do not match";
+          required: "New password is required",
+          minLength: {
+            value: 8,
+            message: "Password must be at least 8 characters",
           },
         },
         secureTextEntry: true,
@@ -50,10 +59,15 @@ export const useHooks = () => {
     {
       fieldType: "text",
       fieldProps: {
-        name: "newPassword",
-        label: "New password",
+        name: "confirmPassword",
+        label: "Confirm password",
         control,
-        rules: { required: "New password is required" },
+        rules: {
+          required: "Confirm password is required",
+          validate: (value) => {
+            return value === newPassword || "Password do not match";
+          },
+        },
         secureTextEntry: true,
       },
     },
@@ -97,8 +111,41 @@ export const useHooks = () => {
     fetchUser();
   }, []);
 
-  const handleChangePassword = ({ ...data }) => {
-    console.log("data", data);
+  const handleChangePassword = async ({ ...data }) => {
+    try {
+      const { email } = (await decodeToken()) as {
+        email: string;
+      };
+      const payload: ChangePasswordDto = {
+        ...(data as Omit<ChangePasswordDto, "email">),
+        email,
+      };
+
+      /**
+       * Step 1
+       * Change password
+       */
+      const response = await dispatch(ChangePasswordAsync({ ...payload }));
+
+      if (isError(response)) throw new Error(response.message);
+
+      /**
+       * Step 2
+       * delete the token
+       */
+      await deleteToken("accessToken");
+      // Step 3 navigate to login page
+      navigate("Login");
+    } catch (err) {
+      const error = err as any;
+
+      setSnackbarProps({
+        children:
+          error?.message ||
+          "Something went wrong, Please check your current password, Try again!",
+        type: "error",
+      });
+    }
   };
 
   const handleResetForm = () => {

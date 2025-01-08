@@ -5,7 +5,7 @@ import { LoginAsync } from "../../../store/slices/auth/auth.effect";
 import { authSelector } from "../../../store/slices/auth/auth.selector";
 import { useMemo } from "react";
 import { useSnackBar } from "../../../components/hooks/useSnackBar";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { isError } from "../../../utils/catchError";
 import { setToken } from "../../../lib/tokenStorage";
 export interface ILoginCredentials {
@@ -59,7 +59,9 @@ export const useHooks = () => {
 
   const handleForgotPassword = () => {};
 
-  const handleSignUp = () => {};
+  const handleSignUp = () => {
+    navigate("SignUp");
+  };
 
   useMemo(async () => {
     if (data?.access_token) {

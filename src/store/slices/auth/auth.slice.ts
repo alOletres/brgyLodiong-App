@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { LoginAsync } from "./auth.effect";
+import { ChangePasswordAsync, LoginAsync } from "./auth.effect";
 
 export interface IAPIResponse<T> {
   message?: string;
@@ -42,6 +42,15 @@ const authSlice = createSlice({
           isFetching: false,
           isError: true,
         };
+      })
+      .addCase(ChangePasswordAsync.pending, (state, action) => {
+        return { ...state, isFetching: true };
+      })
+      .addCase(ChangePasswordAsync.fulfilled, (state, action) => {
+        return { ...state, isFetching: false };
+      })
+      .addCase(ChangePasswordAsync.rejected, (state, action) => {
+        return { ...state, isFetching: false };
       });
   },
 });

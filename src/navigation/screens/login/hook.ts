@@ -14,7 +14,7 @@ export interface ILoginCredentials {
 }
 export const useHooks = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { message, data } = useSelector(authSelector);
+  const { message, data, isFetching } = useSelector(authSelector);
   const { setSnackbarProps } = useSnackBar();
   const { navigate } = useNavigation();
 
@@ -76,5 +76,6 @@ export const useHooks = () => {
     message,
     handleForgotPassword,
     handleSignUp,
+    isFetching,
   };
 };

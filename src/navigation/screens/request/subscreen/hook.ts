@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../../store";
 import { useSnackBar } from "../../../../components/hooks/useSnackBar";
 import { useState } from "react";
@@ -9,6 +9,7 @@ import { createRequestAsync } from "../../../../store/slices/request/request.eff
 import { isError } from "../../../../utils/catchError";
 import { Option } from "react-native-paper-dropdown";
 import { useNavigation } from "@react-navigation/native";
+import { selectRequest } from "../../../../store/slices/request/request.selector";
 
 const requestTypes: string[] = ["CERTIFICATE", "CLEARANCE", "PERMIT"];
 
@@ -18,6 +19,7 @@ export const useHooks = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { setSnackbarProps } = useSnackBar();
   const { navigate } = useNavigation();
+  const { isFetching } = useSelector(selectRequest);
 
   const [option, setOption] = useState<Option[]>(
     requestTypes.map((value): Option => {
@@ -61,5 +63,12 @@ export const useHooks = () => {
     reset();
   };
 
-  return { control, option, handleSubmit, onSubmit, handleFormReset };
+  return {
+    control,
+    option,
+    handleSubmit,
+    onSubmit,
+    handleFormReset,
+    isFetching,
+  };
 };

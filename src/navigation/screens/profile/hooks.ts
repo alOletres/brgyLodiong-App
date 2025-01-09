@@ -7,12 +7,13 @@ import { ButtonProps } from "react-native-paper";
 import { decodeToken, deleteToken } from "../../../lib/tokenStorage";
 import { FindAllResidentsDto } from "./type";
 import { ChangePasswordDto } from "../login/type";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { ChangePasswordAsync } from "../../../store/slices/auth/auth.effect";
 import { useSnackBar } from "../../../components/hooks/useSnackBar";
 import { useNavigation } from "@react-navigation/native";
 import { isError } from "../../../utils/catchError";
+import { authSelector } from "../../../store/slices/auth/auth.selector";
 
 export const useHooks = () => {
   const { control, handleSubmit: onSubmit, reset, watch } = useForm({});
@@ -20,6 +21,7 @@ export const useHooks = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { setSnackbarProps } = useSnackBar();
   const { navigate } = useNavigation();
+  const { isFetching } = useSelector(authSelector);
 
   const [expandedAccount, setExpandedAccount] = useState<boolean>(true);
   const handleAccountPress = () => setExpandedAccount(!expandedAccount);
@@ -172,5 +174,6 @@ export const useHooks = () => {
     handleSecurityPress,
     expandedSecurity,
     securityActions,
+    isFetching,
   };
 };

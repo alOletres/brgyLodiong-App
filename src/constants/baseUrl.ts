@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "../lib/tokenStorage";
 
 const base = axios.create({
-  baseURL: "http://192.168.68.103:4000",
+  baseURL: "https://brgylodiong-sazva.kinsta.app",
 });
 
 // Add a request interceptor

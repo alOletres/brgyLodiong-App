@@ -25,7 +25,7 @@ export const useHook = () => {
 
       setSnackbarProps({
         children: "Account Successfully created!",
-        type: "error",
+        type: "success",
       });
 
       navigate("Login");

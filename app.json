@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "drApp",
+    "name": "DocRequest",
     "slug": "drApp",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -32,6 +32,11 @@
       ],
       "react-native-edge-to-edge",
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "adbaf7f4-037f-40de-a09e-4a4456d0921b"
+      }
+    }
   }
 }

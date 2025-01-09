@@ -18,6 +18,9 @@ export const LoginAsync = createAsyncThunk(
       return response.data;
     } catch (err) {
       const error = err as AxiosError<IAPIResponse<undefined>>;
+
+      console.log("error", error);
+
       handleErrors(err);
 
       return rejectWithValue(error.response?.data.message);

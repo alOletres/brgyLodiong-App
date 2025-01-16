@@ -6,6 +6,7 @@ import { useSnackBar } from "../../../components/hooks/useSnackBar";
 import { createResidentAsync } from "../../../store/slices/resident/resident.effects";
 import { CreateResidentsDto } from "./type";
 import { isError } from "../../../utils/catchError";
+import { useState } from "react";
 
 export const useHook = () => {
   const { control, reset, handleSubmit: onSubmit, watch } = useForm();
@@ -13,16 +14,20 @@ export const useHook = () => {
   const { navigate } = useNavigation();
   const { setSnackbarProps } = useSnackBar();
 
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+
   const password = watch("password");
 
   const handleSubmit = async ({ ...data }) => {
     try {
+      setIsFetching(true);
       const response = await dispatch(
         createResidentAsync({ ...data } as CreateResidentsDto)
       );
 
       if (isError(response)) throw new Error(response.message);
 
+      setIsFetching(false);
       setSnackbarProps({
         children: "Account Successfully created!",
         type: "success",
@@ -32,6 +37,8 @@ export const useHook = () => {
     } catch (err) {
       const error = err as any;
 
+      console.log("error", error);
+
       setSnackbarProps({
         children: error?.message || "Something went wrong, Try again!",
         type: "error",
@@ -39,5 +46,5 @@ export const useHook = () => {
     }
   };
 
-  return { control, reset, handleSubmit, onSubmit, password };
+  return { isFetching, control, reset, handleSubmit, onSubmit, password };
 };

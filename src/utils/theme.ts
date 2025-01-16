@@ -3,7 +3,7 @@ import { MD3LightTheme as DefaultTheme } from "react-native-paper";
 export const theme = {
   ...DefaultTheme,
   colors: {
-    primary: "rgb(7, 162, 245)",
+    primary: "rgb(21, 125, 11)",
     onPrimary: "rgb(255, 255, 255)",
     primaryContainer: "rgb(207, 229, 255)",
     onPrimaryContainer: "rgb(0, 29, 51)",

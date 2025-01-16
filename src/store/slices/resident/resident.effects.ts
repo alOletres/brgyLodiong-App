@@ -16,6 +16,8 @@ export const createResidentAsync = createAsyncThunk(
       const error = err as AxiosError<IAPIResponse<undefined>>;
       handleErrors(err);
 
+      console.log("error", error);
+
       return rejectWithValue(error.response?.data.message);
     }
   }

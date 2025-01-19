@@ -24,8 +24,8 @@ const snackBarSlice = createSlice({
       };
     },
 
-    clearSnackbarProps(state, action) {
-      return { ...state, snackBarProps: action.payload };
+    clearSnackbarProps(state) {
+      return initialState;
     },
   },
 });

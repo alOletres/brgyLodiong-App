@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setSnackbarProps as dispatchSnackbarProps,
   CustomSnackBarProps,
+  clearSnackbarProps,
 } from "./../../store/slices/snackBar/snackbar.slice";
 import { useCallback } from "react";
 import { snackBarSelector } from "../../store/slices/snackBar/snackbar.selector";
@@ -38,10 +39,11 @@ export const useSnackBar = () => {
   );
 
   const onDismissSnackBar = () => {
-    setSnackbarProps({
-      visible: false,
-      children: "dismiss",
-    });
+    dispatch(clearSnackbarProps());
+    // setSnackbarProps({
+    //   visible: false,
+    //   children: "",
+    // });
   };
 
   return {

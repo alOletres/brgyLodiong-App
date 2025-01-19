@@ -10,8 +10,11 @@ import { isError } from "../../../../utils/catchError";
 import { Option } from "react-native-paper-dropdown";
 import { useNavigation } from "@react-navigation/native";
 import { selectRequest } from "../../../../store/slices/request/request.selector";
+import { ECERTIFICATES } from "../../../../constants/certificates";
 
-const requestTypes: string[] = ["CERTIFICATE", "CLEARANCE", "PERMIT"];
+const requestTypes: string[] = Object.values(ECERTIFICATES).sort((a, b) =>
+  a > b ? 1 : -1
+);
 
 export const useHooks = () => {
   const { control, handleSubmit: onSubmit, reset } = useForm();

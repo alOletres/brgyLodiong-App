@@ -36,9 +36,13 @@ const authSlice = createSlice({
         };
       })
       .addCase(LoginAsync.rejected, (state, action) => {
+        console.log("login rejected action", action);
+
         return {
           ...state,
-          message: action.payload as string,
+          message: action.payload
+            ? (action.payload as string)
+            : (action.error.message as string),
           isFetching: false,
           isError: true,
         };

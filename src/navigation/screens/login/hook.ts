@@ -5,7 +5,7 @@ import { LoginAsync } from "../../../store/slices/auth/auth.effect";
 import { authSelector } from "../../../store/slices/auth/auth.selector";
 import { useMemo } from "react";
 import { useSnackBar } from "../../../components/hooks/useSnackBar";
-import { CommonActions, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { isError } from "../../../utils/catchError";
 import { setToken } from "../../../lib/tokenStorage";
 export interface ILoginCredentials {
@@ -47,11 +47,9 @@ export const useHooks = () => {
       });
       reset();
     } catch (err) {
-      const error = err as any;
       setSnackbarProps({
         children:
-          error?.message ||
-          "Either Username and Password is incorrect, Try again!",
+          message || "Either Username and Password is incorrect, Try again!",
         type: "error",
       });
     }

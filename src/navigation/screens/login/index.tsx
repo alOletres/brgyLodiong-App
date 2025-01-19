@@ -30,9 +30,9 @@ export function LoginScreen(): React.JSX.Element {
               }}
             />
             <View style={{ justifyContent: "center" }}>
-              <Text style={{ fontSize: 16 }}>Document Request App</Text>
+              <Text style={{ fontSize: 16 }}>Brgy. Lower Lodiong App</Text>
               <Text style={{ fontSize: 12, color: "gray" }}>
-                © 2024 All Rights Reserved
+                © 2025 All Rights Reserved
               </Text>
             </View>
           </View>
@@ -42,10 +42,9 @@ export function LoginScreen(): React.JSX.Element {
           <TextInput
             control={control}
             name="username"
-            label="Username"
-            placeholder="Username"
+            label="Email"
             dense={true}
-            rules={{ required: "Username is required" }}
+            rules={{ required: "Email is required" }}
           />
         </View>
 

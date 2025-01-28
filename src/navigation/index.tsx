@@ -4,7 +4,7 @@ import {
   StaticParamList,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Image } from "react-native";
+import { Image, Text } from "react-native";
 import NewspaperIcon from "../assets/newspaper.png";
 import RequestIcon from "../assets/request.png";
 import ProfileIcon from "../assets/profile.png";
@@ -17,6 +17,7 @@ import { RequestScreen } from "./screens/request";
 import { ProfileScreen } from "./screens/profile";
 import { ComposeRequestScreen } from "./screens/request/subscreen/compose-request";
 import { SignUpScreen } from "./screens/signup";
+import { HeaderButton } from "@react-navigation/elements";
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
@@ -57,7 +58,7 @@ const HomeTabs = createBottomTabNavigator({
 
     Profile: {
       screen: ProfileScreen,
-      options: {
+      options: ({ navigation }) => ({
         tabBarIcon: ({ color, size }) => (
           <Image
             source={ProfileIcon}
@@ -68,7 +69,13 @@ const HomeTabs = createBottomTabNavigator({
         headerLeft: () => (
           <Image source={ImageLogo} style={{ height: 40, width: 40 }} />
         ),
-      },
+
+        headerRight: () => (
+          <HeaderButton onPress={() => navigation.navigate("Login")}>
+            <Text>Sign out</Text>
+          </HeaderButton>
+        ),
+      }),
     },
   },
 });

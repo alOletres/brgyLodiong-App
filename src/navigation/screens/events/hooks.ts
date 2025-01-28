@@ -39,7 +39,7 @@ export const useHooks = () => {
               { title: "Where", description: value.location },
               {
                 title: "When",
-                description: moment(value.eventDate).format("ll"),
+                description: moment(value.eventDate).format("lll"),
               },
             ],
           };

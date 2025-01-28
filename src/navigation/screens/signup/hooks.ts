@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { useNavigation } from "@react-navigation/native";
 import { useSnackBar } from "../../../components/hooks/useSnackBar";
@@ -7,12 +7,14 @@ import { createResidentAsync } from "../../../store/slices/resident/resident.eff
 import { CreateResidentsDto } from "./type";
 import { isError } from "../../../utils/catchError";
 import { useState } from "react";
+import { selectResident } from "../../../store/slices/resident/resident.selector";
 
 export const useHook = () => {
   const { control, reset, handleSubmit: onSubmit, watch } = useForm();
   const dispatch = useDispatch<AppDispatch>();
   const { navigate } = useNavigation();
   const { setSnackbarProps } = useSnackBar();
+  const { message } = useSelector(selectResident);
 
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
@@ -35,12 +37,9 @@ export const useHook = () => {
 
       navigate("Login");
     } catch (err) {
-      const error = err as any;
-
-      console.log("error", error);
-
+      setIsFetching(false);
       setSnackbarProps({
-        children: error?.message || "Something went wrong, Try again!",
+        children: message || "Something went wrong, Try again!",
         type: "error",
       });
     }

@@ -1,13 +1,13 @@
 {
   "expo": {
     "name": "Brgy Lower Lodiong",
-    "slug": "Brgy Lower Lodiong",
+    "slug": "BrgyLowerLodiong",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "scheme": "drapp",
+    "scheme": "BrgyLowerLodiong",
     "ios": {
       "supportsTablet": true
     },
@@ -35,7 +35,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "adbaf7f4-037f-40de-a09e-4a4456d0921b"
+        "projectId": "e992298f-4ca1-4898-a354-886b1b43780a"
       }
     }
   }

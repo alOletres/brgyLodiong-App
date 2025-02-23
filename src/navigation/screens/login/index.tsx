@@ -12,7 +12,7 @@ export function LoginScreen(): React.JSX.Element {
     handleFormSubmit,
     handleSubmit,
     handleForgotPassword,
-    handleSignUp,
+    handleRegstration,
     isFetching,
   } = useHooks();
 
@@ -70,10 +70,10 @@ export function LoginScreen(): React.JSX.Element {
         </View>
 
         <View style={styles.linksContainer}>
-          <TouchableOpacity onPress={handleForgotPassword}>
+          {/* <TouchableOpacity onPress={handleForgotPassword}>
             <Text style={styles.linkText}>Forgot Password?</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleSignUp}>
+          </TouchableOpacity> */}
+          <TouchableOpacity onPress={handleRegstration}>
             <Text style={styles.linkText}>Sign Up</Text>
           </TouchableOpacity>
         </View>

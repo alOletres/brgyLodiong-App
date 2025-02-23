@@ -4,12 +4,15 @@ import SnackBarReducer from "./slices/snackBar/snackbar.slice";
 import RequestReducer from "./slices/request/request.slice";
 import EventsReducer from "./slices/events/events.slice";
 import ResidentReducer from "./slices/resident/resident.slice";
+import CameraReducer from "./slices/camera/camera.slice";
+
 const reducer = combineReducers({
   auth: AuthReducer,
   snackbar: SnackBarReducer,
   request: RequestReducer,
   events: EventsReducer,
   residents: ResidentReducer,
+  camera: CameraReducer,
 });
 
 export const store = configureStore({

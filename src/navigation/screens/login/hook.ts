@@ -57,8 +57,8 @@ export const useHooks = () => {
 
   const handleForgotPassword = () => {};
 
-  const handleSignUp = () => {
-    navigate("SignUp");
+  const handleRegstration = () => {
+    navigate("Registration");
   };
 
   useMemo(async () => {
@@ -73,7 +73,7 @@ export const useHooks = () => {
     handleSubmit,
     message,
     handleForgotPassword,
-    handleSignUp,
+    handleRegstration,
     isFetching,
   };
 };

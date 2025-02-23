@@ -1,9 +1,9 @@
 import { ScrollView, View } from "react-native";
 import { Card, Button } from "react-native-paper";
-import CardTitle from "./../../../components/CardTitle";
+import CardTitle from "../../../../../components/CardTitle";
 import { useHook } from "./hooks";
-import CustomTextInput from "../../../components/TextInput";
-import FloatingProgressBar from "../../../components/ProgressBar";
+import CustomTextInput from "../../../../../components/TextInput";
+import FloatingProgressBar from "../../../../../components/ProgressBar";
 
 export function SignUpScreen() {
   const {
@@ -18,8 +18,11 @@ export function SignUpScreen() {
     <>
       {isFetching && <FloatingProgressBar />}
       <ScrollView style={{ paddingHorizontal: 5 }}>
-        <Card style={{ borderRadius: 0 }}>
-          <CardTitle title="Sign up" icon="account-plus-outline" />
+        <Card style={{ borderRadius: 0, padding: 10 }}>
+          <CardTitle
+            title="Fill-in the required fields"
+            icon="account-plus-outline"
+          />
 
           <CustomTextInput
             label="Firstname"

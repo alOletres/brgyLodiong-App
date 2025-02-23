@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CreateResidentsDto } from "../../../navigation/screens/signup/type";
 import axios from "../../../constants/baseUrl";
 import { handleErrors } from "../../../utils/catchError";
 import { AxiosError } from "axios";
@@ -7,9 +6,11 @@ import { IAPIResponse } from "../auth/auth.slice";
 
 export const createResidentAsync = createAsyncThunk(
   "resident/create",
-  async (payload: CreateResidentsDto, { rejectWithValue }) => {
+  async (payload: FormData, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/residents", payload);
+      const response = await axios.post("/api/residents", payload, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       return response.data;
     } catch (err) {

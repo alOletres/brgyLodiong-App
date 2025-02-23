@@ -16,8 +16,10 @@ import { EventScreen } from "./screens/events";
 import { RequestScreen } from "./screens/request";
 import { ProfileScreen } from "./screens/profile";
 import { ComposeRequestScreen } from "./screens/request/subscreen/compose-request";
-import { SignUpScreen } from "./screens/signup";
+import { SignUpScreen } from "./screens/registration/screens/signup";
 import { HeaderButton } from "@react-navigation/elements";
+import RegistrationScreen from "./screens/registration";
+import { CameraScreen } from "./screens/registration/screens/camera";
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
@@ -105,37 +107,18 @@ const RootStack = createNativeStackNavigator({
     SignUp: {
       screen: SignUpScreen,
       options: {
-        title: "",
+        title: "Last Step",
       },
     },
-    // Profile: {
-    //   screen: Profile,
-    //   linking: {
-    //     path: ":user(@[a-zA-Z0-9-_]+)",
-    //     parse: {
-    //       user: (value) => {
-    //         console.log("value", value);
+    CameraScreen: {
+      screen: CameraScreen,
+      options: { headerShown: false },
+    },
+    Registration: {
+      screen: RegistrationScreen,
+      options: { title: "Step 1" },
+    },
 
-    //         value.replace(/^@/, "");
-    //       },
-    //     },
-    //     stringify: {
-    //       user: (value) => `@${value}`,
-    //     },
-    //   },
-    // },
-    // Settings: {
-    //   screen: Settings,
-    //   options: ({ navigation }) => ({
-
-    //     presentation: "modal",
-    //     headerRight: () => (
-    //       <HeaderButton onPress={navigation.goBack}>
-    //         <Text>Close</Text>
-    //       </HeaderButton>
-    //     ),
-    //   }),
-    // },
     NotFound: {
       screen: NotFound,
       options: {

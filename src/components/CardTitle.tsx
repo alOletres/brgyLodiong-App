@@ -13,7 +13,7 @@ const CardTitle = ({ icon, ...props }: ICardTitleProps) => {
     <Card.Title
       titleVariant="titleMedium"
       subtitleVariant="labelSmall"
-      titleStyle={{ textTransform: "capitalize" }}
+      // titleStyle={{ textTransform: "capitalize" }}
       subtitleStyle={{ textTransform: "capitalize" }}
       {...props}
       left={(props) => <Avatar.Icon {...props} icon={icon} />}
